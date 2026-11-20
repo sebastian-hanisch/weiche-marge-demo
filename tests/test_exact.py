@@ -91,7 +91,10 @@ def test_slsqp_primal_mit_schlupf_gleich_exaktem_dualwert(C):
     for start in ([0.0, 0.0] + [1.0] * 5, [1.0, -2.0] + [0.5] * 5, [-1.0, 1.0] + [2.0] * 5):
         r = optimize.minimize(lambda z: 0.5 * z[0] ** 2 + Cf * z[2:].sum(), np.array(start), constraints=cons, bounds=[(None, None)] * 2 + [(0, None)] * 5, method="SLSQP",
                               options={"ftol": 1e-14, "maxiter": 500})
-        if r.success and (best is None or r.fun < best.fun):
+        # SLSQP meldet bei ftol = 1e-14 unter Linux (scipy 1.18) für C = 100 oft „Positive directional derivative“ (Status 8) und success = False, obwohl es am Optimum steht:
+        # gezählt wird darum jeder Lauf, dessen Punkt zulässig ist (Nebenbedingungen und Schranken bis 1e-8), nicht nur der mit success = True.
+        zulaessig = bool(np.all(cons[0]["fun"](r.x) >= -1e-8) and np.all(r.x[2:] >= -1e-8))
+        if zulaessig and (best is None or r.fun < best.fun):
             best = r
     z = Ex.knick_zeile(C)
     assert best is not None and abs(best.fun - float(z["dual"])) < 1e-8 * max(1.0, float(z["dual"])) and abs(best.x[0] - float(z["w"])) < 1e-6
