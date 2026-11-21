@@ -4,7 +4,7 @@ SEED_MAX, DEFAULT_SEED = 999999, 7
 
 DATASETS = ("Gauß-Klassen", "Ringe mit Streuung", "Fünf Punkte auf der Geraden")
 DEFAULT_DATA = DATASETS[2]  # das Handbeispiel: klein, von Hand nachrechenbar, mit dem Knick bei C = 1/3
-FLIP_OPTIONS = (0.0, 0.1)  # Anteil vertauschter Etiketten im Training; der Test bleibt sauber
+FLIP_OPTIONS = (0.0, 0.1)  # Anteil vertauschter Labels im Training; der Test bleibt sauber
 DEFAULT_FLIP = 0.0
 KERN_OPTIONS = ("linear", "Gauß")
 DEFAULT_KERN = "linear"
@@ -54,13 +54,13 @@ PRESETS = {
     "Gauß-Kern: C zu groß": {"data": "Gauß-Klassen", "kern": "Gauß", "sigma": 1.0, "c": 1000.0, "steps": 100000},
     "C zu klein (Mehrheitsklasse)": {"data": "Gauß-Klassen", "kern": "Gauß", "sigma": 1.0, "c": 0.001, "flip": 0.1},
     "Ringe: C und Bandbreite": {"data": "Ringe mit Streuung", "kern": "Gauß", "sigma": 0.5, "c": 1.0},
-    "Rauschetiketten": {"data": "Gauß-Klassen", "kern": "linear", "c": 0.001, "flip": 0.1},
+    "Rausch-Labels": {"data": "Gauß-Klassen", "kern": "linear", "c": 0.001, "flip": 0.1},
 }
 PRESET_HELP = {
-    "Handbeispiel (fünf Punkte auf der Geraden)": "Fünf Punkte auf einer Geraden, einer mit dem falschen Etikett: nicht trennbar. Die Tabelle aus der Aufzählung zeigt den Knick bei C = 1/3: darüber ändert C die Funktion nicht mehr. Von Hand in Brüchen nachrechenbar.",
+    "Handbeispiel (fünf Punkte auf der Geraden)": "Fünf Punkte auf einer Geraden, einer mit dem falschen Label: nicht trennbar. Die Tabelle aus der Aufzählung zeigt den Knick bei C = 1/3: darüber ändert C die Funktion nicht mehr. Von Hand in Brüchen nachrechenbar.",
     "Linearer Kern: C ist egal": "Gauß-Klassen ohne Rauschen, linearer Kern, C = 1: die eingefrorene Kurve zeigt, wie weit C den mittleren Testfehler über sieben Stufen von 1e-3 bis 1e3 ändert (Mittel über 30 Zufalls-Seeds; die einzelne Live-Instanz kann am kleinsten C abweichen).",
     "Gauß-Kern: C zu groß": "Gauß-Klassen, Gauß-Kern σ = 1, C = 1000, Schrittgrenze 100 000: der Löser rechnet mit der Schrittgrenze 100 000; die eingefrorene Kurve zeigt, dass der mittlere Testfehler bei großem C höher liegt als bei kleinem.",
-    "C zu klein (Mehrheitsklasse)": "Gauß-Klassen mit 10 % vertauschten Etiketten, Gauß-Kern, C = 1e-3: fast alle Multiplikatoren stoßen an die Schranke; sind die Klassen durch das Vertauschen ungleich besetzt, ordnet die Lösung jeden Punkt der Mehrheitsklasse zu. Der Testfehler wechselt dann je Zufalls-Seed; die Kurve zeigt das Mittel.",
+    "C zu klein (Mehrheitsklasse)": "Gauß-Klassen mit 10 % vertauschten Labels, Gauß-Kern, C = 1e-3: fast alle Multiplikatoren stoßen an die Schranke; sind die Klassen durch das Vertauschen ungleich besetzt, ordnet die Lösung jeden Punkt der Mehrheitsklasse zu. Der Testfehler wechselt dann je Zufalls-Seed; die Kurve zeigt das Mittel.",
     "Ringe: C und Bandbreite": "Ringe mit Streuung, Gauß-Kern σ = 0,5, C = 1: die gute Lage ist eine Lage im Raster aus C und σ zusammen; die eingefrorene Tabelle zeigt die Spanne über C je Bandbreite.",
-    "Rauschetiketten": "Gauß-Klassen mit 10 % vertauschten Etiketten, linearer Kern, C = 1e-3: auch der lineare Kern kippt bei sehr kleinem C; die eingefrorene Kurve zeigt, ab welchem C der mittlere Testfehler flach ist.",
+    "Rausch-Labels": "Gauß-Klassen mit 10 % vertauschten Labels, linearer Kern, C = 1e-3: auch der lineare Kern kippt bei sehr kleinem C; die eingefrorene Kurve zeigt, ab welchem C der mittlere Testfehler flach ist.",
 }

@@ -1,6 +1,6 @@
 """Eigenschaftstests (ORACLE-PLAYBOOK §5): Invarianten des SMO und der weichen Marge auf je 20 bis 50 Zufallsinstanzen mit festem Zufalls-Seed (Bedingungen im Test, unter 10 s).
 
-Σ yα = 0 und 0 ≤ α ≤ C nach jedem Schritt; Dualwert steigt je Schritt; Etiketten vertauschen; Punkte permutieren; Verschiebung (linear mit Bias); Skalierung von Daten und σ;
+Σ yα = 0 und 0 ≤ α ≤ C nach jedem Schritt; Dualwert steigt je Schritt; Labels vertauschen; Punkte permutieren; Verschiebung (linear mit Bias); Skalierung von Daten und σ;
 Daten verdoppeln und C halbieren; Dualwert, ‖w‖ und Schlupfsumme monoton in C; harte Marge ab C ≥ max α; gleicher Zufalls-Seed gleiche Ausgabe."""
 
 import numpy as np

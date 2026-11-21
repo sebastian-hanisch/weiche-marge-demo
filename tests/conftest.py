@@ -21,5 +21,5 @@ def hand():
 
 @pytest.fixture
 def zwei_punkte():
-    """Zwei Punkte x = ±1 mit Etiketten ±1: Q = [[1, 1], [1, 1]], Dual 2a − 2a², also α = (1/2, 1/2) für C ≥ 1/2 und α = (C, C) darunter; w = 1, Marge 2 (von Hand)."""
+    """Zwei Punkte x = ±1 mit Labels ±1: Q = [[1, 1], [1, 1]], Dual 2a − 2a², also α = (1/2, 1/2) für C ≥ 1/2 und α = (C, C) darunter; w = 1, Marge 2 (von Hand)."""
     return Sc.Instance(np.array([[1.0], [-1.0]]), np.array([1.0, -1.0]), "zwei Punkte")

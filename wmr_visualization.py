@@ -84,7 +84,7 @@ def fig_line1d(model, title=None, height=330):
                                  hovertemplate="x = %{x}<br>f = %{y:.3f}<extra></extra>"))
     for i in range(len(X)):
         fig.add_annotation(x=X[i], y=f[i], text=f"ξ = {ev.fmt(max(0.0, 1 - yf[i]), 2)}", showarrow=False, yshift=-18, font=dict(size=10))
-    return _style(fig, title or "Handbeispiel: f(x) und die Randlinien f = ±1; unter dem Etikett steht der Schlupf ξ", height, "Lage x", "f(x)")
+    return _style(fig, title or "Handbeispiel: f(x) und die Randlinien f = ±1; unter dem Label steht der Schlupf ξ", height, "Lage x", "f(x)")
 
 
 def fig_c_curve(d: dict, key: str, bayes, group_colors=("#2F6B65", "#4c78a8"), title=None):

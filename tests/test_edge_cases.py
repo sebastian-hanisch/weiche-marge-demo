@@ -1,4 +1,4 @@
-"""Randfälle: n = 2, nur eine Klasse, alle Punkte gleich, extrem kleines und großes C (Meldung statt Rechnen), doppelte Punkte mit verschiedenen Etiketten, unausgewogene Klassen,
+"""Randfälle: n = 2, nur eine Klasse, alle Punkte gleich, extrem kleines und großes C (Meldung statt Rechnen), doppelte Punkte mit verschiedenen Labels, unausgewogene Klassen,
 Gleichstand bei der Arbeitsmenge (kleinster Index), Regler an den Grenzen."""
 
 import numpy as np
@@ -41,7 +41,7 @@ def test_extrem_kleines_c_alle_alpha_an_der_schranke_und_b_nicht_eindeutig():
     assert (m.alpha >= 1e-9 * (1 - 1e-6)).all() and m.groups()["schranke"] == 20 and m.groups()["marge"] == 0
     lo, hi = ev.b_interval(m.K, inst.y, m.alpha, 1e-9)
     assert hi - lo > 1e-3 or not np.isfinite(hi - lo)  # kein freier Stützvektor: b liegt nur in einem Intervall
-    flipped = Sc.gauss_classes(20, 3, 0.1)  # unausgewogen (zwei Etiketten vertauscht): Σ yα = 0 verbietet α = C bei allen
+    flipped = Sc.gauss_classes(20, 3, 0.1)  # unausgewogen (zwei Labels vertauscht): Σ yα = 0 verbietet α = C bei allen
     k = ev.fit(flipped, "gauss", 1.0, 1e-9, 1e-12, 100000)
     assert (flipped.y > 0).sum() != (flipped.y < 0).sum() and k.groups()["schranke"] < 20
 

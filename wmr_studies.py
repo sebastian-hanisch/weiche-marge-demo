@@ -130,7 +130,7 @@ def wahl_pooled(d: dict, key: str, flip: str) -> dict:
 
 
 def validierung(d: dict, group: int, m: int) -> dict:
-    """Gewinnerauswahl auf einer frisch gezogenen Validierungsmenge der Größe m (ohne vertauschte Etiketten): optimistisch = kleinster Fehler dort, ehrlich = Fehler der gewählten Zelle auf den frischen Testpunkten."""
+    """Gewinnerauswahl auf einer frisch gezogenen Validierungsmenge der Größe m (ohne vertauschte Labels): optimistisch = kleinster Fehler dort, ehrlich = Fehler der gewählten Zelle auf den frischen Testpunkten."""
     g = _arr(d, "wahl60", group, "flip0")
     te = np.array(g["te"])
     va = np.array(g["va"][str(m)])

@@ -388,7 +388,7 @@ def verdict_loeser(rows, hand: bool = False):
 def verdict_wahl(val, cv, pooled200=None):
     """Wahl von C (und σ) auf den Ringen: Optimismus der Gewinnerauswahl auf einer Validierungsmenge (`val` aus `wmr_studies.validierung`) und CV gegen Voreinstellung (`cv` aus `wahl`)."""
     z = val["optimismus"] / val["se"] if val["se"] > 0 else 0.0
-    txt = (f"Gewinnerauswahl auf {val['m']} frisch gezogenen Validierungspunkten (36 Zellen C × σ, ohne vertauschte Etiketten, {val['n_seeds']} Zufalls-Seeds): "
+    txt = (f"Gewinnerauswahl auf {val['m']} frisch gezogenen Validierungspunkten (36 Zellen C × σ, ohne vertauschte Labels, {val['n_seeds']} Zufalls-Seeds): "
            f"Fehler dort {fmt(val['optimistisch'], 4)}, dieselbe Wahl auf frischen Punkten {fmt(val['ehrlich'], 4)}, Optimismus {fmt(val['optimismus'], 4)} (Standardfehler {fmt(val['se'], 4)}). "
            f"5-fache Kreuzvalidierung auf 60 Punkten: {fmt(cv['cv'], 4)}, Voreinstellung (C = 1, γ = 1/(p·Var X)): {fmt(cv['default'], 4)}; gepaarte Differenz je Zufalls-Seed {fmt(cv['diff_mean'], 4)} "
            f"(Standardfehler {fmt(cv['diff_se'], 4)}, {fmt(cv['diff_se_zahl'], 1)} Standardfehler; Kreuzvalidierung besser in {cv['cv_besser']}, schlechter in {cv['cv_schlechter']} von {cv['n_seeds']}).")

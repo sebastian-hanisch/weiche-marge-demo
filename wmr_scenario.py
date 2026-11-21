@@ -4,11 +4,11 @@ Zufallsquelle überall SplitMix64 (`wmr_rng.py`, plattformfest). Normalwerte fü
 Logarithmus und Kosinus, bitgleich auf Windows und Linux); die großen Testmengen (2 000 Punkte) nutzen `fast_normal` (Inverse der Verteilungsfunktion aus `random()`,
 nur bis auf die letzte Binärstelle plattformgleich). Erzeuger:
 
-* „Gauß-Klassen“: zwei überlappende Klassen N((±Abstand/2, 0), I) im Abstand 2 (Bayes-Fehler Φ(−1) = 0,1587), Etiketten abwechselnd.
+* „Gauß-Klassen“: zwei überlappende Klassen N((±Abstand/2, 0), I) im Abstand 2 (Bayes-Fehler Φ(−1) = 0,1587), Labels abwechselnd.
 * „Ringe mit Streuung“: zwei Ringe um ein Depot, Radius 1 (Klasse −1) und 2 (Klasse +1), Radius normalverteilt mit Streuung s (bei 0 abgeschnitten, durch Verwerfen),
   Winkel gleichverteilt; Bayes-Fehler bei s = 0,35: 0,0766 (Integral, siehe `bayes_ringe`).
 * „Fünf Punkte auf der Geraden“: das Handbeispiel (nicht trennbar), x = (0, 1, 2, 3, 4), y = (−1, −1, +1, −1, +1).
-* Vertauschen von Etiketten: ein Anteil `flip` der Punkte (gerundet) bekommt das umgekehrte Etikett; die Auswahl ist ein `shuffle` der Indizes (die ersten k).
+* Vertauschen von Labels: ein Anteil `flip` der Punkte (gerundet) bekommt das umgekehrte Label; die Auswahl ist ein `shuffle` der Indizes (die ersten k).
 """
 
 import math
@@ -45,7 +45,7 @@ def _labels(n: int) -> np.ndarray:
 
 
 def flip_labels(y: np.ndarray, flip: float, rng: SplitMix64) -> np.ndarray:
-    """Ein Anteil `flip` der Etiketten (k = round(flip · n) Punkte, ausgewählt als die ersten k eines `shuffle` der Indizes) wird umgekehrt; flip = 0 ändert nichts und zieht keine Zufallszahl."""
+    """Ein Anteil `flip` der Labels (k = round(flip · n) Punkte, ausgewählt als die ersten k eines `shuffle` der Indizes) wird umgekehrt; flip = 0 ändert nichts und zieht keine Zufallszahl."""
     y = np.array(y, float)
     k = int(round(flip * len(y)))
     if k <= 0:
@@ -58,7 +58,7 @@ def flip_labels(y: np.ndarray, flip: float, rng: SplitMix64) -> np.ndarray:
 
 
 def gauss_classes(n: int, seed: int, flip: float = 0.0, sep: float = 2.0, fast: bool = False) -> Instance:
-    """Gauß-Klassen N((±sep/2, 0), I), Etiketten abwechselnd (+1 bei geradem Index), danach Vertauschen eines Anteils `flip`."""
+    """Gauß-Klassen N((±sep/2, 0), I), Labels abwechselnd (+1 bei geradem Index), danach Vertauschen eines Anteils `flip`."""
     rng = SplitMix64(seed)
     nrm = fast_normal if fast else (lambda r: r.normal())
     y = _labels(n)
@@ -89,7 +89,7 @@ def ringe_streuung(n: int, seed: int, s: float = 0.35, flip: float = 0.0, fast: 
 
 
 def fuenf_punkte() -> Instance:
-    """Handbeispiel: fünf Punkte auf einer Geraden; der Punkt x = 3 hat das Etikett −1, liegt aber zwischen +1-Punkten: nicht trennbar."""
+    """Handbeispiel: fünf Punkte auf einer Geraden; der Punkt x = 3 hat das Label −1, liegt aber zwischen +1-Punkten: nicht trennbar."""
     return Instance(np.array([[0.0], [1.0], [2.0], [3.0], [4.0]]), np.array([-1.0, -1.0, 1.0, -1.0, 1.0]), "Fünf Punkte auf der Geraden")
 
 
@@ -105,7 +105,7 @@ def make_instance(data: str, n: int, seed: int, flip: float, fast: bool = False)
 
 
 def test_set(data: str, m: int, seed: int) -> Instance:
-    """Frische, saubere Testpunkte (keine vertauschten Etiketten) desselben Modells; Zufalls-Seed getrennt vom Training."""
+    """Frische, saubere Testpunkte (keine vertauschten Labels) desselben Modells; Zufalls-Seed getrennt vom Training."""
     return make_instance(data, m, seed + 7_000_003, 0.0, fast=True)
 
 

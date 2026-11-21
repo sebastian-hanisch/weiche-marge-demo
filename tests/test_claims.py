@@ -159,7 +159,7 @@ def test_absolutaussagen_stehen_nur_mit_ihrer_voraussetzung():
 
 
 def test_zu_kleines_c_ist_eine_mischung_mehrheitsklasse_bei_unausgewogenen_klassen():
-    """Das Mittel bei C = 0,001 mit vertauschten Etiketten (Gauß σ = 1) ist eine Mischung: Testfehler genau 0,5 (alle Testpunkte einer Klasse) in den Zufalls-Seeds mit unausgewogenen Klassen, sonst nahe dem besten C."""
+    """Das Mittel bei C = 0,001 mit vertauschten Labels (Gauß σ = 1) ist eine Mischung: Testfehler genau 0,5 (alle Testpunkte einer Klasse) in den Zufalls-Seeds mit unausgewogenen Klassen, sonst nahe dem besten C."""
     from readme_facts import majority_check
 
     mj = majority_check()

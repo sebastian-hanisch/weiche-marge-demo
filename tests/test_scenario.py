@@ -93,7 +93,7 @@ def test_bayes_fehler_ringe_integral_gegen_quad_und_stichprobe():
 
 def test_handbeispiel_fest_und_nicht_trennbar_von_hand(hand):
     assert hand.X[:, 0].tolist() == [0, 1, 2, 3, 4] and hand.y.tolist() == [-1, -1, 1, -1, 1] and hand.n == 5
-    # x = 3 (Etikett −1) liegt zwischen den +1-Punkten x = 2 und x = 4: keine Schwelle trennt (jede Schwelle t, f = ±(x − t), gibt mindestens einen Fehler)
+    # x = 3 (Label −1) liegt zwischen den +1-Punkten x = 2 und x = 4: keine Schwelle trennt (jede Schwelle t, f = ±(x − t), gibt mindestens einen Fehler)
     fehler = min(int((np.where(s * (hand.X[:, 0] - t) >= 0, 1.0, -1.0) != hand.y).sum()) for t in np.arange(-0.5, 4.6, 0.5) for s in (1, -1))
     assert fehler >= 1
 

@@ -87,8 +87,8 @@ with st.sidebar:
                            help="Legt die Trainingspunkte und die 2 000 frischen Testpunkte fest. Beim Handbeispiel gibt es keinen Zufall.")
     st.button("🎲 Neue Instanz generieren", width="stretch", on_click=randomize_seed, disabled=hand)
     n = st.slider("Zahl der Trainingspunkte n", *bounds("n_slider"), key="n_slider", disabled=hand, help="Live bis 200; die eingefrorenen Studien rechnen mit n = 60 bzw. 200.")
-    flip = st.radio("Vertauschte Etiketten im Training", C.FLIP_OPTIONS, key="flip_select", horizontal=True, format_func=_flip_label, disabled=hand,
-                    help="Anteil der Trainingsetiketten, der umgekehrt wird (Rauschen). Der Test bleibt sauber.")
+    flip = st.radio("Vertauschte Labels im Training", C.FLIP_OPTIONS, key="flip_select", horizontal=True, format_func=_flip_label, disabled=hand,
+                    help="Anteil der Trainings-Labels, der umgekehrt wird (Rauschen). Der Test bleibt sauber.")
     st.header("🔀 Modell")
     kern = st.radio("Kern", C.KERN_OPTIONS, key="kern_select", horizontal=True, help="Linear oder Gauß mit Bandbreite σ (Längenmaß, γ = 1/(2σ²)).")
     sigma = st.select_slider("Bandbreite σ des Gauß-Kerns", options=C.SIGMA_OPTIONS, key="sigma_select", format_func=lambda v: fmt_g(v, 2), disabled=linear,
@@ -159,7 +159,7 @@ with cB:
     elif case and D:
         st.plotly_chart(fig_c_curve(D, case, bayes), width="stretch", key="chart_curve")
     else:
-        st.info("Für diese Kombination aus Datensatz, Kern und Bandbreite gibt es keine eingefrorene Kurve; eingefroren sind Gauß-Klassen (linear und Gauß σ = 1) und Ringe (Gauß σ = 0,5), je ohne und mit 10 % vertauschten Etiketten.")
+        st.info("Für diese Kombination aus Datensatz, Kern und Bandbreite gibt es keine eingefrorene Kurve; eingefroren sind Gauß-Klassen (linear und Gauß σ = 1) und Ringe (Gauß σ = 0,5), je ohne und mit 10 % vertauschten Labels.")
 if r1["hand"]:
     kind, text = ev.verdict_hand(ev.hand_table())
 elif case and D:
@@ -214,14 +214,14 @@ if D:
     for gg in (1, 2):
         for fk, fl in (("flip0", "ohne Rauschen"), ("flip10", "10 % vertauscht")):
             w = St.wahl(D, "wahl60", gg, fk)
-            rows3.append({"Gruppe": gg, "Etiketten": fl, "im Rückblick bestes Feld": fmt(w["rueckblick"], 4), "5-fache Kreuzvalidierung": fmt(w["cv"], 4), "Voreinstellung": fmt(w["default"], 4),
+            rows3.append({"Gruppe": gg, "Labels": fl, "im Rückblick bestes Feld": fmt(w["rueckblick"], 4), "5-fache Kreuzvalidierung": fmt(w["cv"], 4), "Voreinstellung": fmt(w["default"], 4),
                           "Differenz CV − Voreinstellung (Standardfehler)": f"{fmt(w['diff_mean'], 4)} ({fmt(w['diff_se'], 4)})", "CV besser / schlechter": f"{w['cv_besser']} / {w['cv_schlechter']} von {w['n_seeds']}"})
     st.markdown("**n = 60, 30 Zufalls-Seeds je Gruppe** (Fehler auf 2 000 frischen Testpunkten; die Voreinstellung ist C = 1 und γ = 1/(p·Var X))")
     st.dataframe(pd.DataFrame(rows3), hide_index=True, width="stretch")
     rows3b = []
     for fk, fl in (("flip0", "ohne Rauschen"), ("flip10", "10 % vertauscht")):
         p = St.wahl_pooled(D, "wahl200", fk)
-        rows3b.append({"Etiketten": fl, "Zufalls-Seeds": p["n_seeds"], "Differenz CV − Voreinstellung (Standardfehler)": f"{fmt(p['mean'], 4)} ({fmt(p['se'], 4)})",
+        rows3b.append({"Labels": fl, "Zufalls-Seeds": p["n_seeds"], "Differenz CV − Voreinstellung (Standardfehler)": f"{fmt(p['mean'], 4)} ({fmt(p['se'], 4)})",
                        "je Gruppe zu 20": " / ".join(fmt(v, 4) for v in p["je_gruppe"]), "CV besser / schlechter / gleich": f"{p['besser']} / {p['schlechter']} / {p['gleich']}"})
     st.markdown("**n = 200, drei Gruppen zu je 20 Zufalls-Seeds**")
     st.dataframe(pd.DataFrame(rows3b), hide_index=True, width="stretch")
@@ -247,7 +247,7 @@ with c4a:
     if r4["inst"].X.shape[1] == 2:
         st.plotly_chart(fig_loo(r4), width="stretch", key="chart_loo")
     else:
-        st.dataframe(pd.DataFrame({"Punkt": [int(x) for x in r4["inst"].X[:, 0]], "Etikett": [int(v) for v in r4["inst"].y], "Stützvektor": ["ja" if v else "nein" for v in r4["was_sv"]],
+        st.dataframe(pd.DataFrame({"Punkt": [int(x) for x in r4["inst"].X[:, 0]], "Label": [int(v) for v in r4["inst"].y], "Stützvektor": ["ja" if v else "nein" for v in r4["was_sv"]],
                                    "falsch (b des Lösers)": ["ja" if v else "nein" for v in r4["err_solver"]], "falsch (ungünstigstes b)": ["ja" if v else "nein" for v in r4["err_worst"]]}),
                      hide_index=True, width="stretch")
 with c4b:
@@ -258,7 +258,7 @@ getattr(st, kind)(text)
 if D:
     e1, e5 = St.loo_e1(D), St.loo_e5(D)
     st.markdown(
-        f"**Studie (eingefroren, libsvm `SVC`, Zähleinheit Instanzen).** {e1['n']} Instanzen (n = 12 bis 30; Gauß-Klassen linear und Gauß mit und ohne 10 % vertauschten Etiketten, Ringe, getrennte Klassen; "
+        f"**Studie (eingefroren, libsvm `SVC`, Zähleinheit Instanzen).** {e1['n']} Instanzen (n = 12 bis 30; Gauß-Klassen linear und Gauß mit und ohne 10 % vertauschten Labels, Ringe, getrennte Klassen; "
         f"C aus 0,01 / 0,1 / 1 / 10 / 1000): mit dem b des Lösers {e1['verletzungen']} Verletzungen von „LOO-Fehler ≤ Zahl der Stützvektoren“, scharf (Gleichheit) in {e1['scharf']}, Median des Verhältnisses {fmt(e1['ratio_median'], 3)}, "
         f"Maximum {fmt(e1['ratio_max'], 3)}; {e1['degeneriert']} Instanzen ohne freien Stützvektor und mit Punkten α = 0 (b nicht eindeutig), darin {e1['degeneriert_verletzt']} Verletzungen. "
         f"Gezielte Suche ({e5['n']} kleine Instanzen, n = 6 bis 10, C von 0,02 bis 0,5, beide Klassen mindestens zweimal): mit dem b des Lösers {e5['verl_solver']} Verletzungen, **mit dem ungünstigsten b des "
@@ -305,7 +305,7 @@ if D:
                    f"3 Zufalls-Seeds je n, Gauß-Klassen, Gauß-Kern σ = 1, C = 1. Einzelwerte {bs['newton_min']} bis {bs['newton_max']} Newton-Schritte; bei n = 80 je nach Einstellung (μ = 2, 10, 50; Abbruchlücke 1e-4, 1e-6, 1e-8) "
                    f"{fmt(bs['abh_min'], 0)} bis {fmt(bs['abh_max'], 0)}. `trust-constr` zählt Iterationen anderer Einheit und trifft den Dualwert nur auf {fmt_g(bs['trust_dual_rel_max'], 2)} relativ; nur als Band.")
     st.markdown(
-        f"**Studie (eingefroren, Zähleinheit Aktualisierungsschritte des eigenen SMO).** n = 200, Gauß-Klassen mit 5 % vertauschten Etiketten, Gauß-Kern σ = 1: "
+        f"**Studie (eingefroren, Zähleinheit Aktualisierungsschritte des eigenen SMO).** n = 200, Gauß-Klassen mit 5 % vertauschten Labels, Gauß-Kern σ = 1: "
         f"{', '.join(fmt(v, 0) for v in sc['gauss']['own_mean'])} Schritte bei C = 0,01 / 0,1 / 1 / 10 / 100 / 1000 (Mittel über 5 Zufalls-Seeds; bei C = 1000 je Zufalls-Seed {sc['gauss']['own_min'][-1]} bis {sc['gauss']['own_max'][-1]}). "
         f"Gegen n (C = 1, 20 Zufalls-Seeds, n = 40 bis 1280): Steigung von log(Schritte) gegen log(n) {fmt(sn['slope_all'], 2)} (Bootstrap-90-%-Band [{fmt(sn['band'][0], 2)}; {fmt(sn['band'][1], 2)}] über die 20 Zufalls-Seeds; "
         f"{fmt(sn['slope_a'], 2)} und {fmt(sn['slope_b'], 2)} in zwei Gruppen zu 10; libsvm `n_iter_` {fmt(sn['slope_lib'], 2)}); bei n = 640 zwischen {sn['min'][4]} und {sn['max'][4]} Schritten je Zufalls-Seed. "

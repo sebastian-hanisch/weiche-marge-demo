@@ -22,7 +22,7 @@ def test_verdict_c_flach_unter_der_kleinen_schwelle_info_mit_allen_zahlen():
 
 
 def test_verdict_c_stark_warnung_und_flacher_bereich_wird_genannt():
-    rausch = [0.40, 0.25, 0.172, 0.173, 0.174, 0.173, 0.173]  # Rauschetiketten, linear: kippt am linken Rand, ab C = 0,1 flach
+    rausch = [0.40, 0.25, 0.172, 0.173, 0.174, 0.173, 0.173]  # Rausch-Labels, linear: kippt am linken Rand, ab C = 0,1 flach
     kind, text = ev.verdict_c(CS, [rausch, [v + 0.01 for v in rausch]], None)
     assert kind == "warning" and "C wirkt hier stark" in text and "Spanne 0,2280 und 0,2280" in text
     assert "Ab C = 0,1 beträgt die Spanne höchstens 0,0020" in text and "am größten bei C = 0,001" in text and "Bayes" not in text
@@ -117,7 +117,7 @@ PRESET_ERWARTUNG = {
     "Gauß-Kern: C zu groß": ("C wirkt hier stark", "warning"),
     "C zu klein (Mehrheitsklasse)": ("C wirkt hier stark", "warning"),
     "Ringe: C und Bandbreite": ("messbar, aber nicht stark", "info"),
-    "Rauschetiketten": ("Ab C = 0,1 beträgt die Spanne höchstens", "warning"),
+    "Rausch-Labels": ("Ab C = 0,1 beträgt die Spanne höchstens", "warning"),
 }
 
 

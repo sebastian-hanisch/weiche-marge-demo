@@ -38,7 +38,7 @@ CASE_KEYS = {
 
 
 def majority_check(c=0.001, seeds=range(1001, 1031)):
-    """Zu kleines C (Gauß-Klassen mit 10 % vertauschten Etiketten, Gauß σ = 1, n = 60, eigenes SMO der App): in den Zufalls-Seeds mit unausgewogenen Klassen ordnet die Lösung alle Testpunkte der Mehrheitsklasse zu,
+    """Zu kleines C (Gauß-Klassen mit 10 % vertauschten Labels, Gauß σ = 1, n = 60, eigenes SMO der App): in den Zufalls-Seeds mit unausgewogenen Klassen ordnet die Lösung alle Testpunkte der Mehrheitsklasse zu,
     in den ausgewogenen liegt der Testfehler nahe dem besten C."""
     import wmr_evaluation as ev
     import wmr_scenario as Sc

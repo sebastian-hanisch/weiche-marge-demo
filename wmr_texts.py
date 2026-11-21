@@ -49,7 +49,7 @@ def loeser_studie_md() -> str:
         f"Die größte KKT-Lücke ist {fmt_g(t[0]['gap_max'], 3)} und {fmt_g(t[1]['gap_max'], 3)} (Toleranz 1e-3; über der Toleranz in {t[0]['gap_over_tol']} und {t[1]['gap_over_tol']} Zellen, libsvm schrumpft). "
         f"In {t[0]['bad']} und {t[1]['bad']} Zellen liegt der Testfehler mehr als 0,05 über dem des besten C desselben Zufalls-Seeds. "
         f"Mit der Grenze 100 000 Schritte warnt der Löser in {t[0]['warn_cap']} und {t[1]['warn_cap']} Zellen ({wc[0]}; Gruppe 2: {wc[1]}). "
-        f"Gegenprobe mit „harter Marge“ per riesigem C (Gauß-Klassen mit 10 % vertauschten Etiketten, n = 60, Gauß-Kern σ = 1, Grenze 100 000, sechs Sätze zu 30 Zufalls-Seeds): "
+        f"Gegenprobe mit „harter Marge“ per riesigem C (Gauß-Klassen mit 10 % vertauschten Labels, n = 60, Gauß-Kern σ = 1, Grenze 100 000, sechs Sätze zu 30 Zufalls-Seeds): "
         f"Warnung bei C = 1e2 / 1e4 / 1e6 / 1e8 in {' / '.join(str(v) for v in w['gepoolt'])} von {w['von']} Läufen; die Falle selbst führt die Demo `harte-marge-demo` (Experiment 4)."
     )
 
@@ -83,13 +83,13 @@ def assumptions_md() -> str:
 | **Der Löser meldet nichts** | Bei unbegrenzter Schrittzahl kann libsvm nicht warnen; mit endlicher Grenze warnt es nur an der Grenze. Die KKT-Lücke bleibt klein, falsch ist das gestellte C. | Zufalls-Seeds, Zellen |
 
 **Nicht angeboten, nicht gebaut, nicht gemessen** (kein Regler, kein Versprechen): ν-SVM, `class_weight` (C je Klasse) und Platt-Skalierung; Stützvektor-Regression; C gegen n, verschachtelte Kreuzvalidierung,
-Validierungsmenge bei vertauschten Etiketten; Arbeitsmengenwahl gegen C; ein Fremd-Innere-Punkte-Löser mit der Einheit Newton-Schritt; Reparatur unzulässiger Kerne (`kernwahl-demo`), Kriging (`kernel-ridge-demo`), Landmarken (`gram-naeherung-demo`),
+Validierungsmenge bei vertauschten Labels; Arbeitsmengenwahl gegen C; ein Fremd-Innere-Punkte-Löser mit der Einheit Newton-Schritt; Reparatur unzulässiger Kerne (`kernwahl-demo`), Kriging (`kernel-ridge-demo`), Landmarken (`gram-naeherung-demo`),
 Baumverfahren (`kernel-oder-baum-demo`); Nutzen im Betrieb.
 """
 
 
 FORMULAS = r"""
-**Lesehilfe.** Gegeben sind Punkte $x_i$ mit Etiketten $y_i \in \{-1, +1\}$ ($i = 1, \dots, n$, beide Klassen kommen vor), ein Kern $K$ (Skalarprodukt im Merkmalsraum) und die Strafe $C > 0$ je Verletzung.
+**Lesehilfe.** Gegeben sind Punkte $x_i$ mit Labels $y_i \in \{-1, +1\}$ ($i = 1, \dots, n$, beide Klassen kommen vor), ein Kern $K$ (Skalarprodukt im Merkmalsraum) und die Strafe $C > 0$ je Verletzung.
 Gesucht ist die Funktion $f$ mit kleinstem Preis aus Länge von $w$ und Schlupf.
 
 | Symbol | Bedeutung |

@@ -10,7 +10,7 @@ ist dieselbe Einheit, aber nicht dieselbe Zahl: andere Gleichstände, anderes Sc
 Schnittstelle (nur numpy; keine Zufallsquelle im Modul, der Zufall kommt von außen):
   smo(K, y, C, eps=1e-3, max_steps=100000, wss="second", rng=None, trace=False, trace_every=1, tau=1e-12) -> SmoResult
     K      Gram-Matrix (n x n, symmetrisch; muss nicht positiv semidefinit sein, ein Nenner <= 0 wird durch tau ersetzt)
-    y      Etiketten in {-1, +1} (Array der Länge n)
+    y      Labels in {-1, +1} (Array der Länge n)
     C      Schranke (> 0), numpy.inf für die harte Marge
     eps    Abbruch, sobald die KKT-Lücke m(a) - M(a) <= eps ist (Voreinstellung 1e-3 wie LIBSVM)
     max_steps  Schrittgrenze: bei Erreichen hält das Verfahren an und `message` sagt es (kein stilles Weiterlaufen)
